@@ -1,12 +1,12 @@
 import { useState } from "react";
-import {useNavigate} from "react-router"
+import { useNavigate } from "react-router";
 import "./Login.css";
 import axios from "axios";
 
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -42,7 +42,7 @@ function Login() {
                 <button type="submit" className="login-btn">
                     Sign In
                 </button>
-                <button className="login-btn" onClick={() => navigate("/register")}>
+                <button type="button" className="login-btn" onClick={() => navigate("/register")}>
                     Go to Register
                 </button>
             </form>

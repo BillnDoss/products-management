@@ -43,7 +43,7 @@ function Login() {
                     Register now
                 </button>
 
-                <button className="login-btn" onClick={() => navigate("/")}>
+                <button type="button" className="login-btn" onClick={() => navigate("/")}>
                     Back to Login
                 </button>
             </form>
