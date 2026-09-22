@@ -27,7 +27,7 @@ function Login() {
     return (
         <div className="login-wrapper">
             <form onSubmit={handleSubmit} className="login-card">
-                <h2>Please Register here</h2>
+                <h2>Sign Up</h2>
 
                 <div className="form-group">
                     <label htmlFor="email">Email Address</label>
@@ -43,8 +43,8 @@ function Login() {
                     Register now
                 </button>
 
-                <button type="button" className="login-btn" onClick={() => navigate("/")}>
-                    Back to Login
+                <button type="button" className="register-btn" style={{ marginTop: "12px" }} onClick={() => navigate("/")}>
+                    Already have an account? Sign in here!
                 </button>
             </form>
         </div>

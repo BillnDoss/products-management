@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import "./Login.css";
 import axios from "axios";
@@ -7,6 +7,12 @@ function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
+
+    // Redirects users to the products page if token exists in storage but needs to be inside a useEffect
+    useEffect(() => {
+        const userToken = localStorage.getItem("token");
+        if (userToken !== null) navigate("/products");
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -17,7 +23,10 @@ function Login() {
                 email,
                 password,
             });
-            console.log("Login successful: ", response.data);
+            // Unable to immediately store data as token in storage because it is an object
+            localStorage.setItem("token", response.data.token);
+            navigate("/products");
+            console.log(response.data);
             alert("Login Successful!");
         } catch (error) {
             console.log("Login Error: ", error);
@@ -42,8 +51,8 @@ function Login() {
                 <button type="submit" className="login-btn">
                     Sign In
                 </button>
-                <button type="button" className="login-btn" onClick={() => navigate("/register")}>
-                    Go to Register
+                <button type="button" className="register-btn" style={{ marginTop: "12px" }} onClick={() => navigate("/register")}>
+                    No account? Sign up here!
                 </button>
             </form>
         </div>
