@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import "./Login.css";
-import axios from "axios";
+import api from "../utils/api";
 
 function Login() {
     const [email, setEmail] = useState("");
@@ -19,7 +19,8 @@ function Login() {
         // 💡 Add your login / authentication logic here
         console.log("Form submitted:", { email, password });
         try {
-            const response = await axios.post("http://localhost:5000/users/login", {
+            // There is no need for the localhost URL and axios anymore because the api has the details
+            const response = await api.post("/users/login", {
                 email,
                 password,
             });

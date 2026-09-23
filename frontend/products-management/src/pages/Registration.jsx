@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import "./Login.css";
-import axios from "axios";
+import api from "../utils/api";
 
 function Login() {
     const [email, setEmail] = useState("");
@@ -13,7 +13,7 @@ function Login() {
         // 💡 Add your login / authentication logic here
         console.log("Form submitted:", { email, password });
         try {
-            const response = await axios.post("http://localhost:5000/users/register", {
+            const response = await api.post("/users/register", {
                 email,
                 password,
             });

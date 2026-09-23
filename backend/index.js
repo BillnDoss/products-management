@@ -5,8 +5,10 @@ const userRoutes = require("./routes/userRoute");
 const productRoutes = require("./routes/productRoute");
 const cors = require("cors");
 
+require("dotenv").config()
+
 mongoose
-    .connect("mongodb://localhost:27017/jwt_with_products")
+    .connect(process.env.MONGODB_URI)
     .then(() => {
         console.log("MongoDB Connected");
     })
@@ -27,7 +29,7 @@ app.use(corsHandler);
 app.use("/users", userRoutes);
 app.use("/products", productRoutes);
 
-const PORT = 5000;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
     console.log(`Server is running at http://localhost:${PORT}`);
 });

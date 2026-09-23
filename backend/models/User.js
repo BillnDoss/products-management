@@ -20,7 +20,7 @@ UserSchema.pre("save", function (next) {
     if (!this.isModified("password")) {
         next;
     }
-    this.password = bcrypt.hashSync(this.password, 10);
+    this.password = bcrypt.hashSync(this.password, Number(process.env.BCRYPT_SALT_ROUNDS));
     next;
 });
 
