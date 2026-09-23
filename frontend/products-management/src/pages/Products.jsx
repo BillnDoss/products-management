@@ -3,6 +3,7 @@ import axios from "axios";
 import ProductCard from "../components/ProductCard";
 import { useNavigate } from "react-router";
 import ProductModal from "../components/ProductModal";
+import api from "../utils/api";
 
 export default function Products() {
     // No validation for token
@@ -57,16 +58,54 @@ export default function Products() {
     };
 
     const handleAddSave = async (payload) => {
-        const response = await api.post("/products", payload, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-        });
-        console.log(response.data);
-        setProducts([...products, response.data]);
+        try {
+            if (currentProduct == null) {
+                const response = await api.post("/products", payload, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    },
+                });
+                console.log(response.data);
+                setProducts([...products, response.data]);
+            } else {
+                const response = await api.patch(`/products/${currentProduct._id}`, payload, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    },
+                });
+                console.log(response.data);
+                const updatedProducts = products.map((product) => {
+                    if (product._id == currentProduct._id) {
+                        return response.data;
+                    } else return product;
+                });
+                setProducts(updatedProducts);
+            }
+        } catch (error) {
+            console.error("Error saving product:", error);
+            alert("Failed to add/edit product. Please check your connection.");
+        }
     };
 
-    const onDeleteProduct = () => {};
+    const handleDeleteProduct = async (id) => {
+        try {
+            const response = await api.delete(`/products/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+            });
+            // console.log(response.data);
+            if (response.status == 204) {
+                const remainingProducts = products.filter((product) => {
+                    return product._id != id;
+                });
+                setProducts(remainingProducts);
+            }
+        } catch (error) {
+            console.log(error);
+            alert("Failed to delete product. Please check your connection.");
+        }
+    };
 
     return (
         <>
@@ -99,12 +138,7 @@ export default function Products() {
                 <main className="p-6 flex-1">
                     <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                         {products.map((product) => (
-                            <ProductCard
-                                key={product._id}
-                                product={product}
-                                onEdit={handleOpenEditForm}
-                                // onDelete={onDeleteProduct}
-                            />
+                            <ProductCard key={product._id} product={product} onEdit={handleOpenEditForm} onDelete={handleDeleteProduct} />
                         ))}
                     </div>
                 </main>

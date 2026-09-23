@@ -23,10 +23,7 @@ exports.updateProduct = async (req, res) => {
 };
 
 exports.deleteProduct = async (req, res) => {
-    try {
-        await Product.findByIdAndDelete(req.params.id);
-        res.sendStatus(204);
-    } catch (err) {
-        res.status(500).json(err);
-    }
+    const { id } = req.params;
+    await Product.findOneAndDelete({ _id: id });
+    res.status(204).json();
 };

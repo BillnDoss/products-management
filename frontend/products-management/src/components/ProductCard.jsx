@@ -1,5 +1,5 @@
 //                      prop
-function ProductCard({ product, onEdit }) {
+function ProductCard({ product, onEdit, onDelete }) {
     console.log(product);
     // destructuring
     const { _id, name, description, price, category, imageUrl } = product;

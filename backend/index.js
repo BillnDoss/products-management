@@ -5,7 +5,7 @@ const userRoutes = require("./routes/userRoute");
 const productRoutes = require("./routes/productRoute");
 const cors = require("cors");
 
-require("dotenv").config()
+require("dotenv").config();
 
 mongoose
     .connect(process.env.MONGODB_URI)
@@ -18,7 +18,7 @@ mongoose
 
 const corsHandler = cors({
     origin: "*",
-    methods: "GET,POST,PUT,DELETE",
+    methods: "GET,POST,PUT,DELETE,PATCH",
     allowedHeaders: ["Content-Type", "Authorization"],
     optionsSuccessStatus: 200,
     preflightContinue: true,
